@@ -1,4 +1,5 @@
 const form = document.getElementById('form');
+const age = document.getElementById('age');
 const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
@@ -34,6 +35,16 @@ function checkLength (input, min, max) {
     }
 }
 
+// Check age is valid
+function checkAge(input) {
+    if(input.value >= 0 && input.value < 1000 && input.value !== '') {
+        console.log('Entra en el rango')
+        showSuccess(input);
+    } else {
+        showError(input, 'La edad debe comprender entre 0 y 999 años');
+    }
+}
+
 // Check email is valid
 function checkEmail(input) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -55,6 +66,10 @@ function checkPasswordsMatch(input1, input2) {
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
+    if (age.value !== '') {
+        showError(age, 'Rellene el campo Edad con un número');
+    }
+
     if (password2.value === '') {
         showError(password2, 'La repetición de contraseña es necesaria');
     } else {
@@ -62,7 +77,8 @@ form.addEventListener('submit', function(e) {
     }
 
     checkLength(username, 3, 15);
+    checkAge(age);
     checkEmail(email);
-    checkLength(password, 6, 25);
+    checkLength(password, 8, 25);
     checkPasswordsMatch(password, password2);
 });
